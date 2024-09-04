@@ -93,3 +93,19 @@ nav{
     left: 0;
     position: absolute;
 }
+.menu{
+    display: none;
+    background-color: none;
+    height: 0px;
+}
+
+@media (max-width: 768px) {
+.menu{
+    display: block;
+    height: 25px;
+    margin-right: 15px;
+}
+.links{
+    display: none;
+}
+}
