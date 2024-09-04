@@ -59,7 +59,7 @@ function autoSlid(){
 }
 window.addEventListener('scroll', () => {
     if(window.scrollY > 100) {
-        nav.style.width = '100%';
+        nav.style.width = '100vw';
         nav.style.borderRadius = '0rem';
     } else {
         nav.style.width = ''; 
