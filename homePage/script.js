@@ -81,9 +81,9 @@ slidShow.addEventListener('click', (event) => {
 });
 function scrollAllProducts() {
     let scrollX = 0; // Initialize scrollX
-    for (let x = 0; x < products.category.scrollWidth; x += 5) {
+    for (let x = 0; x < products.scrollWidth; x += 5) {
         scrollX += 50;
-        product.category.scrollLeft = scrollX;
+        products.scrollLeft = scrollX;
     }
 }
 scrollAllProducts();
