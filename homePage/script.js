@@ -1,10 +1,12 @@
 const slidShow = document.querySelector(".sld-img");
 const MainPhoto = document.querySelector(".sld-big-img");
-const nav = document.querySelector('.navSettings')
-const smallImg = document.querySelector('.small-img')
-const categoryDescription = document.querySelector('.category-description')
+const nav = document.querySelector('.navSettings');
+const categoryDescription = document.querySelector('.category-description');
+const products = document.querySelector('.products');
 let data = [];
+let allProducts = [];
 let currentindex = 0;
+let Random = [];
 const descriptions = [
     {
         name: "Clothes",
@@ -29,47 +31,61 @@ const descriptions = [
 ];
 
 
-
 async function getData() {
     let dataRes = await fetch("https://api.escuelajs.co/api/v1/categories");
+    let allProductsRes = await fetch('https://api.escuelajs.co/api/v1/products');
+    allProducts = await allProductsRes.json();
+    console.log(allProducts);
     data = await dataRes.json();
     const categoriesToDisplay = data.slice(0, 5);
-    categoriesToDisplay.forEach((category, index) =>  {
+    categoriesToDisplay.forEach((category, index) => {
         slidShow.innerHTML += `<img class="small-img" src="${category.image}" data-index="${index}">`;
     });
- 
+  allProducts.forEach((product, index) => {
+        products.innerHTML += `<img class="product" src="${product.category.image}">`;
+    });
     updateMainimg();
     autoSlid();
 }
 
-function updateMainimg(){
-
-    MainPhoto.innerHTML = `<img class="big-img" src="${data[currentindex].image}">`
-    categoryDescription.innerHTML=`
+function updateMainimg() {
+    MainPhoto.innerHTML = `<img class="big-img" src="${data[currentindex].image}">`;
+    categoryDescription.innerHTML = `
     <h1>${data[currentindex].name}</h1>
     <p>${descriptions[currentindex].description}</p>
-    <div class="cat-product" > <a href="https://api.escuelajs.co/api/v1/categories/${data[currentindex].id}/products">Buy Now</a></div>`
+    <div class="cat-product"><a href="https://api.escuelajs.co/api/v1/categories/${data[currentindex].id}/products">Buy Now</a></div>`;
 }
 
-function autoSlid(){
-    setInterval(()=>{
+function autoSlid() {
+    setInterval(() => {
         currentindex = (currentindex + 1) % 5;
         updateMainimg();
     }, 5000);
 }
+
 window.addEventListener('scroll', () => {
-    if(window.scrollY > 100) {
+    if (window.scrollY > 100) {
         nav.style.width = '110vw';
         nav.style.borderRadius = '0rem';
     } else {
-        nav.style.width = ''; 
+        nav.style.width = '';
         nav.style.borderRadius = '2rem';
     }
 });
+
 slidShow.addEventListener('click', (event) => {
     if (event.target.classList.contains('small-img')) {
         currentindex = parseInt(event.target.getAttribute('data-index'));
         updateMainimg();
     }
 });
+function scrollAllProducts() {
+    let scrollX = 0; // Initialize scrollX
+    for (let x = 0; x < products.scrollWidth; x += 5) {
+        scrollX += 50;
+        // Assuming you want to scroll the products container
+        products.scrollLeft = scrollX;
+    }
+}
+scrollAllProducts();
 getData();
