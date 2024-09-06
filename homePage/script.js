@@ -6,7 +6,6 @@ const products = document.querySelector('.products');
 let data = [];
 let allProducts = [];
 let currentindex = 0;
-let Random = [];
 const descriptions = [
     {
         name: "Clothes",
@@ -30,30 +29,33 @@ const descriptions = [
     }
 ];
 
-
 async function getData() {
-    let dataRes = await fetch("https://api.escuelajs.co/api/v1/categories");
-    let allProductsRes = await fetch('https://api.escuelajs.co/api/v1/products');
-    allProducts = await allProductsRes.json();
-    console.log(allProducts);
-    data = await dataRes.json();
-    const categoriesToDisplay = data.slice(0, 5);
-    categoriesToDisplay.forEach((category, index) => {
-        slidShow.innerHTML += `<img class="small-img" src="${category.image}" data-index="${index}">`;
-    });
-  allProducts.forEach((product, index) => {
-        products.innerHTML += `<img class="product" src="${product.category.image}">`;
-    });
-    updateMainimg();
-    autoSlid();
+    try {
+        let dataRes = await fetch("https://api.escuelajs.co/api/v1/categories");
+        let allProductsRes = await fetch('https://api.escuelajs.co/api/v1/products');
+        
+        data = await dataRes.json();
+        allProducts = await allProductsRes.json();
+        console.log(allProducts);
+        
+        const categoriesToDisplay = data.slice(0, 5);
+        categoriesToDisplay.forEach((category, index) => {
+            slidShow.innerHTML += `<img class="small-img" src="${category.image}" data-index="${index}">`;
+        });
+        
+        updateMainimg();
+        autoSlid();
+    } catch (error) {
+        console.error("Error fetching data:", error);
+    }
 }
 
 function updateMainimg() {
     MainPhoto.innerHTML = `<img class="big-img" src="${data[currentindex].image}">`;
     categoryDescription.innerHTML = `
-    <h1>${data[currentindex].name}</h1>
-    <p>${descriptions[currentindex].description}</p>
-    <div class="cat-product"><a href="https://api.escuelajs.co/api/v1/categories/${data[currentindex].id}/products">Buy Now</a></div>`;
+        <h1>${data[currentindex].name}</h1>
+        <p>${descriptions[currentindex].description}</p>
+        <div class="cat-product"><a href="https://api.escuelajs.co/api/v1/categories/${data[currentindex].id}/products">Buy Now</a></div>`;
 }
 
 function autoSlid() {
@@ -64,13 +66,17 @@ function autoSlid() {
 }
 
 window.addEventListener('scroll', () => {
-    if (window.scrollY > 100) {
-        nav.style.width = '110vw';
-        nav.style.borderRadius = '0rem';
-    } else {
-        nav.style.width = '';
-        nav.style.borderRadius = '2rem';
-    }
+    let scrollTimeout;
+    if (scrollTimeout) clearTimeout(scrollTimeout);
+    scrollTimeout = setTimeout(() => {
+        if (window.scrollY > 100) {
+            nav.style.width = '110vw';
+            nav.style.borderRadius = '0rem';
+        } else {
+            nav.style.width = '';
+            nav.style.borderRadius = '2rem';
+        }
+    }, 50);
 });
 
 slidShow.addEventListener('click', (event) => {
@@ -79,12 +85,5 @@ slidShow.addEventListener('click', (event) => {
         updateMainimg();
     }
 });
-function scrollAllProducts() {
-    let scrollX = 0; // Initialize scrollX
-    for (let x = 0; x < products.scrollWidth; x += 5) {
-        scrollX += 50;
-        products.scrollLeft = scrollX;
-    }
-}
-scrollAllProducts();
-getData();
+
+getData()
