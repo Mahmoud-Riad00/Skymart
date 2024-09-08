@@ -17,16 +17,56 @@
     --spacing-large: 20px;
 }
 
-.container {
-    width: 100vw;
+.up{
+    position: relative;
+
+
+}
+.up-container{
+    position: absolute;
+    padding: 15px 20px;
+    background-color: var(--fasion);
+    bottom:50px;
+    right:50px ;
+    position: fixed;
+    z-index: 2000;
     display: flex;
     justify-content: center;
     align-items: center;
+    display: none;
+    border-radius: 5px;
+    text-decoration: none;
+    transition: .3s;
+    box-shadow: 5px 5px rgba(0, 0, 0, 0.2);
+}
+.up-container:hover{
+    box-shadow: 5px 5px rgba(0, 0, 0, 0.5);
+    transform: rotate(0deg) scale(1.15);
+}
+
+.container {
+    width: 100vw;
+    display: flex;
+    justify-content: space-evenly;
+}
+.cart-container{
+    width: 40%;
+    padding: 50;
+
+display: none;
+}
+.cart-view{
+    background-color: var(--fasion);
+    width: 80%;
+    height: 100vh;
+    position: fixed;
+    border-radius: 20px;
+  
 }
 
 .products {
     margin-top: 50px;
-    max-width: 85%;
+    width: 85%;
     display: flex;
     justify-content: space-evenly;
     align-items: center;
@@ -36,9 +76,10 @@
 
 .card {
     background-color: var(--fasion);
-    max-width: 200px;
+    width: 250px;
+    height: 400px;
     display: flex;
-    justify-content: space-between;
+    justify-content: space-evenly;
     align-items: center;
     text-align: center;
     flex-direction: column;
@@ -48,29 +89,24 @@
     font-family: 'Kanit', sans-serif;
     font-style: normal;
     font-weight: 400;
-    transform: rotate(-12deg);
     transition: transform 0.3s ease, box-shadow 0.3s ease;
     z-index: 4;
-    box-shadow: 8px 8px rgba(0, 0, 0, 0.2);
+    box-shadow: rgba(50, 50, 93, 0.25) 0px 50px 100px -20px, rgba(0, 0, 0, 0.3) 0px 30px 60px -30px, rgba(10, 37, 64, 0.35) 0px -2px 6px 0px inset;
 }
-
-
 
 .card .img-container {
     position: relative;
-    display: inline-block;
-}
-.img-container img {
-    position: relative;
+    max-width: 85%;
+    max-height: 225px; /* Fixed height */
+    background-color: #f0f0f0; /* Placeholder background color */
     display: flex;
     justify-content: center;
-    align-items: end;
-
+    align-items: center;
 }
 
-
-.card img {
+.img-container img {
     width: 100%;
+    height: 100%;
     object-fit: cover;
     border-radius: 8px;
 }
@@ -79,33 +115,103 @@
     margin-top: 5px;
 }
 
-.card-txt p {
-    margin-left: 10px;
-    width: 80%; 
-}
-
 .card-NAME {
     width: 90%;
 }
 
 .card:hover {
-    transform: rotate(0deg) scale(1.35);
+    transform: rotate(0deg) scale(1.1);
     z-index: 5;
     border-style: solid;
-    border-width: 1.2px;
-    box-shadow: -8px 8px rgba(0, 0, 0, 0.5);
+    border-width: 0px;
+    box-shadow: rgba(50, 50, 93, 0.25) 0px 50px 100px -20px, rgba(0, 0, 0, 0.3) 0px 30px 60px -30px, rgba(10, 37, 64, 0.35) 0px -2px 6px 0px inset;
+    z-index: 500;
 }
 
 .product-name {
     margin: 10px;
 }
-.categInfo{
+
+.categInfo {
+    width: fit-content;
     color: var(--fasion);
     background-color: var(--text-color-Day);
     position: absolute;
     transform: translateX(-50%);
+    padding: 15px 20px;
     border-radius: 10px;
-    bottom: -8px;
+    bottom: -25px;
     left: 50%;
-        padding: var(--spacing-small) var(--spacing-medium);
+    box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+}
+
+
+.card-txt a {
+    background-image: linear-gradient(to right, #1D2B64 0%, #F8CDDA 51%, #1D2B64 100%);
+    width: 50%;
+    margin: 10px;
+    padding: 10px 0px;
+    text-align: center;
+    text-transform: uppercase;
+    text-decoration: none;
+    transition: 0.5s;
+    background-size: 200% auto;
+    color: white;            
+    box-shadow: 0 0 20px #eee;
+    border-radius: 10px;
+    display: block;
+}
+
+.card-txt a:hover {
+    cursor: pointer;
+    background-position: right center; /* change the direction of the change here */
+    color: #fff;
+    text-decoration: none;
+}
+
+.price {
+    font-family: 'Kanit', sans-serif;
+    font-style: normal;
+    font-weight: 400;
+    font-weight: 900;
+}
+
+.pr-d {
+    display: flex;
+    align-items: center;
+    justify-content: space-evenly;
+}
+.pr-d a{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: fit-content;
+    padding: 10px 15px;
+}
+.cart img{
+    height: 25px;
+    margin-right: 5px;
+}
+.cart {
+    margin-right: 25px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-family: 'Kanit', sans-serif;
+    font-style: normal;
+    font-weight: 400;
+    font-weight: 900;
+
+}
+.cart-buy{
+    height: 25px;
+}
+.product-done{
+    display: none;
+    height: 25px;
+    font-family: 'Kanit', sans-serif;
+    font-style: normal;
+    font-weight: 400;
+    font-weight: 900;
+    text-align: center;
 }
