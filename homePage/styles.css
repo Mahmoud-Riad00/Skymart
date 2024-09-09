@@ -153,3 +153,42 @@ body {
 .products::-webkit-scrollbar {
     display: none; 
 }
+.container {
+    width: 100vw;
+    display: flex;
+    justify-content: center;
+    position:relative;
+
+}
+.cart-container {
+    width: 100vw;
+    height: 75vh;
+    z-index: 500000000000;
+    height: 0;
+    transition: height 0.3s ease;
+    position: absolute;
+    transition: .3s;
+    display: none;
+}
+
+.cart-view{
+    background-color: var(--fasion);
+    width: 30vw;
+    height: 75vh;
+    position: fixed;
+    TOP: 200PX ;
+    right: 0;
+    border-radius: 20px;
+    display: flex;
+    justify-content: space-evenly  ;
+    align-items: center;
+    overflow: scroll;
+    flex-direction: column;
+    padding: 25PX;
+    transition: .3s;
+}
+@media screen and (max-width:800px) {
+    .cart-view{
+        width:100vw
+    }
+}

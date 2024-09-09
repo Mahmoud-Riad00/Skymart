@@ -35,30 +35,34 @@ window.addEventListener('scroll', () => {
 
 // Fetch product data
 async function getData() {
-    let dataRes = await fetch('https://api.escuelajs.co/api/v1/products');
-    let data = await dataRes.json();
+    try {
+        let dataRes = await fetch('https://api.escuelajs.co/api/v1/products');
+        let data = await dataRes.json();
 
-    data.forEach((product, index) => {
-        let productHTML = `
-        <div class="card" data-index="${index}" data-id="${product.id}">
-            <div class="img-container">
-                <img src="${product.images[0]}" alt="${product.title}">
-                <a class="categInfo">${product.category.name}</a>
-            </div>
-            <div class="card-txt">
-                <h3 class="product-name">${product.title}</h3>
-                <div class="pr-d">
-                    <h1 class="price">${product.price}$</h1>
-                    <button>Buy now <img class="cart-buy" src="./Media/shopping-cart.png" alt="cart-buy"></button>
-                    <div class="product-done"><p>Successfully Added to Cart</p><img src=""></div>
+        data.forEach((product, index) => {
+            let productHTML = `
+            <div class="card" data-index="${index}" data-id="${product.id}">
+                <div class="img-container">
+                    <img src="${product.images[0]}" alt="${product.title}">
+                    <a class="categInfo">${product.category.name}</a>
                 </div>
-            </div>
-        </div>`;
-        products.innerHTML += productHTML;
-    });
+                <div class="card-txt">
+                    <h3 class="product-name">${product.title}</h3>
+                    <div class="pr-d">
+                        <h1 class="price">${product.price}$</h1>
+                        <button>Buy now <img class="cart-buy" src="./Media/shopping-cart.png" alt="cart-buy"></button>
+                        <div class="product-done"><p>Successfully Added to Cart</p><img src=""></div>
+                    </div>
+                </div>
+            </div>`;
+            products.innerHTML += productHTML;
+        });
 
-    attachCardEventListeners(data);
-    updateCartView();
+        attachCardEventListeners(data);
+        updateCartView();
+    } catch (error) {
+        console.error('Error fetching product data:', error);
+    }
 }
 
 // Attach click event listeners to cards
@@ -129,7 +133,7 @@ function updateCartView() {
         productView.innerHTML += `
         <div class="tacken-products" data-id="${item.id}">
             <div class="product-ch">
-                <img src="${item.Images[1]}">
+                <img src="${item.Images[0]}">
                 <div class="ch-btn">
                     <p>${item.price}$$</p>
                     <button class="increase">+</button>
@@ -202,17 +206,20 @@ function updateCheckout() {
         <button class="check-out-btn">Checkout</button>
     `;
 
-    document.querySelector('.check-out-btn').addEventListener('click', () => {
-        if (addedToCart.length > 0) {
-            addedToCart = [];
-            localStorage.removeItem('cartItem');
-            updateCartView();
-            updateCartCount();
-            showCheckoutAlert();
-        } else {
-            alert('Your cart is empty!');
-        }
-    });
+    const checkoutButton = document.querySelector('.check-out-btn');
+    if (checkoutButton) {
+        checkoutButton.addEventListener('click', () => {
+            if (addedToCart.length > 0) {
+                addedToCart = [];
+                localStorage.removeItem('cartItem');
+                updateCartView();
+                updateCartCount();
+                showCheckoutAlert();
+            } else {
+                alert('Your cart is empty!');
+            }
+        });
+    }
 }
 
 // Show checkout alert
@@ -230,16 +237,8 @@ document.querySelector('.cart').addEventListener('click', function() {
     let content = document.querySelector('.cart-container');
     let container = document.querySelector('.container');
 
-    if (content.style.display === 'none' || content.style.display === '') {
-        content.style.display = 'block';
-
-        container.style.justifyContent = 'center';
-    } else {
-        content.style.display = 'none';
-        
-        container.style.justifyContent = 'center';
-        container.style.justifyContent = 'center';
-    }
+    content.style.display = content.style.display === 'none' || content.style.display === '' ? 'block' : 'none';
+    container.style.justifyContent = content.style.display === 'block' ? 'center' : 'space-between';
 });
 
 // Initialize the application
@@ -251,28 +250,20 @@ window.onload = function() {
     getData();
 };
 
-// if(window.width <= 1026px)
+// Menu toggle for mobile view
 let menu = document.querySelector('.menu');
 menu.addEventListener('click', () => {
-
     let logo = document.querySelector('.logo');
     let cart = document.querySelector('.cart');
-    let links = document.querySelector('.links'||'.nav-menu')
-    
-    // Toggle the 'active' class on the links element
+    let links = document.querySelector('.links');
+
     links.classList.toggle('active');
     
     if (links.classList.contains('active')) {
         cart.style.display = 'none';
         logo.style.display = 'none';
-        logo.classList.add('logo')
-       
-
     } else {
         cart.style.display = 'block';
         logo.style.display = 'block';
-        logo.style.display='flex'
-
-       
     }
 });
