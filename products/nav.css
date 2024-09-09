@@ -43,7 +43,7 @@ nav {
     background-color: var(--fasion);
     border-radius: 2rem;
     padding: 0.3%;
-    transition: 0.4s;
+    transition: 0.3s;
 }
 
 .logo img, .titleImg {
@@ -126,7 +126,7 @@ nav {
     height: 0px;
 }
 
-@media (max-width: 768px) {
+@media (max-width: 1025px) {
     .menu {
         display: block;
         height: 25px;
@@ -134,7 +134,20 @@ nav {
     }
     .links {
         display: none;
+    display: block;
+    width:fit-content;
+    flex-direction: column;
+    padding: 10PX;
+    
     }
+    .links {
+        display: none;
+    }
+    
+    .links.active {
+        display: block;
+    }
+    
 }
 
 .slideShow {
@@ -247,4 +260,53 @@ nav {
     .category-description {
         width: 70%;
     }
+}
+.nav-menu{
+    display: block;
+    width:100vw;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.cart-container {
+    width: 100vw;
+    height: 75vh;
+    z-index: 500000000000;
+    height: 0;
+    transition: height 0.3s ease;
+    position: absolute;
+    transition: .3s;
+    display: none;
+}
+
+.cart-view{
+    background-color: var(--fasion);
+    width: 30vw;
+    height: 75vh;
+    position: fixed;
+    TOP: 200PX ;
+    right: 0;
+    border-radius: 20px;
+    display: flex;
+    justify-content: space-evenly  ;
+    align-items: center;
+    overflow: scroll;
+    flex-direction: column;
+    padding: 25PX;
+    transition: .3s;
+}
+@media screen and (max-width:800px) {
+    .cart-view{
+        width:100vw
+    }
+}
+.product-view{
+    width: 100%;
+    display: flex;
+    justify-content: space-between  ;
+    align-items: center;
+    flex-direction: column;
 }

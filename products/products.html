@@ -13,6 +13,11 @@
 </head>
 
 <body>
+    <div id="checkout-alert" class="alert">
+        <span class="closebtn" onclick="this.parentElement.style.display='none';">×</span> 
+        Checkout complete! Thank you for your purchase.
+    </div>
+    
     <div id="1" width="0px"></div>
     <nav>
         <div class="navSettings">
@@ -20,7 +25,7 @@
 
                 <a class="logo" href="#"><img src="./Media/Capture-removebg-preview.png" alt="ss">Skymart</a>
             </div>
-            <div class="links">
+            <div class="links edit">
                 <a href="../homePage/index.html">Home</a>
                 <a href="../products.html"><span class="detected"></span>Products</a>
                 <a href="../about.html">About</a>
@@ -29,11 +34,12 @@
                 <a class="registerLink" href="../register.html">Register</a>
                 <a class="profileLink" href="../profile.html">Profile</a>
             </div>
-            <img class="menu" src="./Media/hamburger.png" alt="">
             <div class="cart" >
                 <img src="./Media/shopping-cart.png" alt="cart">
-                <p class="item-number">0</p>
+                <span class="cart-count">0</span>
             </div>
+            <img class="menu" src="./Media/hamburger.png" alt="">
+        
         </div>
         
     </nav>
@@ -47,9 +53,14 @@
         <section class="products"></section>
         <div class="cart-container">
             <div class="cart-view">
+            <div class="product-view"></div>
+                <div class="checkOut">
 
+                </div>
             </div>
+
         </div>
+
     </section>
     </div>
 
