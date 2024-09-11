@@ -1,3 +1,12 @@
+function checkLoggedInUser() {
+    const loggedInUser = JSON.parse(sessionStorage.getItem('loggedInUser'));
+    if (!loggedInUser) {
+        window.location.href = '../login&REGISTER/login.html';
+    } else {
+        document.querySelector('.profileLink').textContent = loggedInUser.userName;
+    }
+}
+
 let products = document.querySelector('.products');
 let nav = document.querySelector('.navSettings');
 let cartContainer = document.querySelector('.up-container');
@@ -59,6 +68,11 @@ async function getData() {
         });
 
         attachCardEventListeners(data);
+        
+        const loggedInUser = JSON.parse(sessionStorage.getItem('loggedInUser'));
+        addedToCart = JSON.parse(localStorage.getItem(`cartItem_${loggedInUser.userEmail}`)) || [];
+        
+        updateCartCount();
         updateCartView();
     } catch (error) {
         console.error('Error fetching product data:', error);
@@ -127,7 +141,8 @@ function toggleProductAddedMessage(event) {
 
 // Update cart view
 function updateCartView() {
-    let cartdata = JSON.parse(localStorage.getItem("cartItem")) || [];
+    const loggedInUser = JSON.parse(sessionStorage.getItem('loggedInUser'));
+    let cartdata = JSON.parse(localStorage.getItem(`cartItem_${loggedInUser.userEmail}`)) || [];
     productView.innerHTML = '';
 
     cartdata.forEach(item => {
@@ -249,10 +264,6 @@ document.querySelector('.cart').addEventListener('click', function() {
 // Initialize the application
 window.onload = function() {
     checkLoggedInUser();
-    addedToCart = JSON.parse(localStorage.getItem('cartItem')) || [];
-    updateCartCount();
-    updateCartView();
-    updateCheckout();
     getData();
 };
 
