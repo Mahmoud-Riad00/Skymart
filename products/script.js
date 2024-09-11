@@ -82,13 +82,15 @@ function attachCardEventListeners(data) {
     document.querySelectorAll('.card').forEach(card => {
         card.addEventListener('click', event => {
             let productId = event.currentTarget.dataset.id;
-            console.log(productId);
+            // Redirect to single product page
+            window.location.href = `../singleProduct/singleProduct.html?id=${productId}`;
         });
     });
 
     document.querySelectorAll('.pr-d button').forEach(buy => {
         buy.addEventListener('click', event => {
             event.preventDefault();
+            event.stopPropagation(); // Prevent redirection when clicking the buy button
             addToCart(event, data);
         });
     });
