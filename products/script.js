@@ -163,6 +163,7 @@ function updateCheckout() {
         <p>Total Items: ${totalItems}</p>
         <p>Total Price: ${totalPrice}$</p>
         <button class="check-out-btn">Checkout</button>
+         updateCartCount();
     `;
 
     const checkoutButton = document.querySelector('.check-out-btn');
