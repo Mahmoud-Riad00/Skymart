@@ -74,6 +74,9 @@ nav {
 }
 
 .links a {
+    display: inline-block;
+    padding: 10px 15px;
+    margin: 5px;
     text-decoration: none;
     margin-right: 5px;
     font-family: "Kanit", sans-serif;
@@ -132,22 +135,28 @@ nav {
         height: 25px;
         margin-right: 15px;
     }
-    .links {
-        display: none;
-    display: block;
-    width:fit-content;
-    flex-direction: column;
-    padding: 10PX;
     
-    }
     .links {
         display: none;
+        width: 100%;
+        background-color: var(--fasion);
+        position: absolute;
+        top: 100%;
+        left: 0;
+        padding: 10px 0;
+        text-align: center;
     }
     
     .links.active {
         display: block;
     }
     
+   
+    .links a {
+        display: block;
+        padding: 10px 15px;
+        margin: 5px 0;
+    }
 }
 
 @media (min-width: 1026px) {
