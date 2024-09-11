@@ -29,7 +29,7 @@ const descriptions = [
     }
 ];
 
-// Add these functions at the beginning of the file
+
 function checkLoggedInUser() {
     const loggedInUser = JSON.parse(sessionStorage.getItem('loggedInUser'));
     if (!loggedInUser) {

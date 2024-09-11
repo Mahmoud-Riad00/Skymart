@@ -84,6 +84,7 @@ nav {
     position: relative;
     z-index: 4;
     overflow: visible;
+    display: inline-block; 
 }
 
 .links {
@@ -134,20 +135,17 @@ nav {
     }
     .links {
         display: none;
-    display: block;
-    width:fit-content;
-    flex-direction: column;
-    padding: 10PX;
-    
+        width: fit-content;
+        flex-direction: column;
+        padding: 10px;
     }
-    .links {
-        display: none;
-    }
-    
     .links.active {
-        display: block;
+        display: flex; 
     }
-    
+    .links a {
+        display: block; 
+        margin-bottom: 10px; 
+    }
 }
 
 .slideShow {
