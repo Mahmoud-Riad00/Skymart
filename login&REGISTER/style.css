@@ -1,10 +1,10 @@
-@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@200;300;400;500;600;700&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Kanit:wght@200;300;400;500;600;700&display=swap");
 
 :root {
-  --primary-color: #4070f4;
-  --background-color: #f0faff;
-  --text-color: #333;
-  --white: #fff;
+  --background-dayMode: #dadcde;
+  --text-color-Day: #16191f;
+  --blue-sky: #0466c8;
+  --fasion: white;
   --border-color: #aaa;
   --shadow-color: rgba(0, 0, 0, 0.1);
 }
@@ -13,7 +13,7 @@
   margin: 0;
   padding: 0;
   box-sizing: border-box;
-  font-family: "Poppins", sans-serif;
+  font-family: "Kanit", sans-serif;
 }
 
 body {
@@ -21,7 +21,7 @@ body {
   display: flex;
   align-items: center;
   justify-content: center;
-  background: var(--background-color);
+  background: var(--background-dayMode);
 }
 
 .wrapper {
@@ -30,7 +30,7 @@ body {
   width: 100%;
   border-radius: 12px;
   padding: 20px 30px 120px;
-  background: var(--primary-color);
+  background: var(--blue-sky);
   box-shadow: 0 5px 10px var(--shadow-color);
   overflow: hidden;
 }
@@ -44,7 +44,7 @@ body {
   padding: 20px 140px;
   border-radius: 50%;
   height: 100%;
-  background: var(--white);
+  background: var(--fasion);
   transition: all 0.6s ease;
 }
 
@@ -57,13 +57,13 @@ body {
 .form header {
   font-size: 30px;
   text-align: center;
-  color: var(--white);
+  color: var(--fasion);
   font-weight: 600;
   cursor: pointer;
 }
 
 .form.login header {
-  color: var(--text-color);
+  color: var(--text-color-Day);
   opacity: 0.6;
 }
 
@@ -89,9 +89,9 @@ form input {
   padding: 0 15px;
   font-size: 16px;
   font-weight: 400;
-  color: var(--text-color);
+  color: var(--text-color-Day);
   border-radius: 8px;
-  background: var(--white);
+  background: var(--fasion);
 }
 
 .form.login input {
@@ -111,17 +111,17 @@ form .checkbox {
 .checkbox input[type="checkbox"] {
   height: 16px;
   width: 16px;
-  accent-color: var(--white);
+  accent-color: var(--fasion);
   cursor: pointer;
 }
 
 form .checkbox label {
   cursor: pointer;
-  color: var(--white);
+  color: var(--fasion);
 }
 
 form a {
-  color: var(--text-color);
+  color: var(--text-color-Day);
   text-decoration: none;
 }
 
@@ -138,18 +138,46 @@ form input[type="submit"] {
 }
 
 .form.login input[type="submit"] {
-  background: var(--primary-color);
-  color: var(--white);
+  background: var(--blue-sky);
+  color: var(--fasion);
   border: none;
 }
 
 @media (max-width: 460px) {
   .wrapper {
     padding: 20px 10px 100px;
+    margin: 0 20px;
   }
   
   .form.login {
     padding: 20px 10px;
     width: 100%;
+  }
+  
+  form input {
+    font-size: 14px;
+  }
+  
+  .form header {
+    font-size: 24px;
+  }
+}
+
+@media (max-width: 320px) {
+  .wrapper {
+    padding: 15px 5px 80px;
+  }
+  
+  .form.login {
+    padding: 15px 5px;
+  }
+  
+  form input {
+    height: 50px;
+    font-size: 12px;
+  }
+  
+  .form header {
+    font-size: 20px;
   }
 }
