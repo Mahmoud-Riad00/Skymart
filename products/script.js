@@ -12,6 +12,7 @@ let nav = document.querySelector('.navSettings');
 let cartContainer = document.querySelector('.up-container');
 let productView = document.querySelector('.product-view');
 let addedToCart = [];
+let hasCheckedOut = false;
 
 // Function to update cart count
 function updateCartCount() {
@@ -68,7 +69,13 @@ async function getData() {
         attachCardEventListeners(data);
         
         const loggedInUser = JSON.parse(sessionStorage.getItem('loggedInUser'));
-        addedToCart = JSON.parse(localStorage.getItem(`cartItem_${loggedInUser.userEmail}`)) || [];
+        hasCheckedOut = JSON.parse(localStorage.getItem(`hasCheckedOut_${loggedInUser.userEmail}`)) || false;
+        
+        if (!hasCheckedOut) {
+            addedToCart = JSON.parse(localStorage.getItem(`cartItem_${loggedInUser.userEmail}`)) || [];
+        } else {
+            addedToCart = [];
+        }
         
         updateCartCount();
         updateCartView();
@@ -141,7 +148,7 @@ function toggleProductAddedMessage(event) {
 // Update cart view
 function updateCartView() {
     const loggedInUser = JSON.parse(sessionStorage.getItem('loggedInUser'));
-    let cartdata = JSON.parse(localStorage.getItem(`cartItem_${loggedInUser.userEmail}`)) || [];
+    let cartdata = hasCheckedOut ? [] : (JSON.parse(localStorage.getItem(`cartItem_${loggedInUser.userEmail}`)) || []);
     productView.innerHTML = '';
 
     cartdata.forEach(item => {
@@ -229,6 +236,9 @@ function updateCheckout() {
             if (addedToCart.length > 0) {
                 clearCart();
                 showCheckoutAlert();
+                hasCheckedOut = true;
+                const loggedInUser = JSON.parse(sessionStorage.getItem('loggedInUser'));
+                localStorage.setItem(`hasCheckedOut_${loggedInUser.userEmail}`, JSON.stringify(hasCheckedOut));
             } else {
                 alert('Your cart is empty!');
             }
