@@ -19,9 +19,27 @@ async function fetchSingleProduct() {
 
 function displaySingleProduct(product) {
     const singleProductContainer = document.getElementById('single-product');
+    const smallContainer = document.querySelector('.small-container');
+    
+    // Clear previous content
+    smallContainer.innerHTML = '';
+    
+    // Display small images in a row
+    for(let x = 0; x < product.images.length; x++){
+        smallContainer.innerHTML += `
+        <img src="${product.images[x]}" alt="${product.title}" class="small-product-image" onclick="updateMainImage(this.src)">
+        `;
+    }
+    
+    // Set initial main image and product details
     singleProductContainer.innerHTML = `
         <div class="single-product-card">
-            <img src="${product.images[0]}" alt="${product.title}" class="single-product-image">
+            <div class="product-images">
+                <img src="${product.images[0]}" alt="${product.title}" class="main-product-image" id="mainImage">
+                <div class="small-container-wrapper">
+                    ${smallContainer.outerHTML}
+                </div>
+            </div>
             <div class="single-product-details">
                 <h1>${product.title}</h1>
                 <p class="single-product-category">${product.category.name}</p>
@@ -31,6 +49,10 @@ function displaySingleProduct(product) {
             </div>
         </div>
     `;
+}
+
+function updateMainImage(src) {
+    document.getElementById('mainImage').src = src;
 }
 
 window.onload = fetchSingleProduct;
