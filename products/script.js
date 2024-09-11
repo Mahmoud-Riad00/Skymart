@@ -133,6 +133,9 @@ function updateCartView() {
 // ... [keep attachCartEventListeners as is] ...
 
 // Update cart item quantity and local storage
+f// ... (previous code remains the same)
+
+// Update cart item quantity and local storage
 function updateCartItemQuantity(productElement, quantity) {
     let productId = productElement.closest('.tacken-products').dataset.id;
     let cartKey = getUserCartKey(currentUser);
@@ -145,8 +148,45 @@ function updateCartItemQuantity(productElement, quantity) {
             cartData = cartData.filter(item => item.id !== productId);
         }
         localStorage.setItem(cartKey, JSON.stringify(cartData));
+        
+        // Update cart count immediately after modifying the cart
+        updateCartCount();
+        
+        // Update the quantity display in the UI
+        productElement.querySelector('.number-of-product').textContent = quantity;
+        
+        // Update the checkout information
+        updateCheckout();
     }
 }
+
+// Modify attachCartEventListeners to use updateCartItemQuantity
+function attachCartEventListeners() {
+    let increaseButtons = document.querySelectorAll('.increase');
+    let decreaseButtons = document.querySelectorAll('.decrease');
+
+    increaseButtons.forEach(button => {
+        button.addEventListener('click', (event) => {
+            let productElement = event.target.closest('.tacken-products');
+            let quantityElement = productElement.querySelector('.number-of-product');
+            let currentQuantity = parseInt(quantityElement.textContent);
+            updateCartItemQuantity(productElement, currentQuantity + 1);
+        });
+    });
+
+    decreaseButtons.forEach(button => {
+        button.addEventListener('click', (event) => {
+            let productElement = event.target.closest('.tacken-products');
+            let quantityElement = productElement.querySelector('.number-of-product');
+            let currentQuantity = parseInt(quantityElement.textContent);
+            if (currentQuantity > 0) {
+                updateCartItemQuantity(productElement, currentQuantity - 1);
+            }
+        });
+    });
+}
+
+// ... (rest of the code remains the same)
 
 function updateCheckout() {
     if (!currentUser) {
@@ -163,7 +203,7 @@ function updateCheckout() {
         <p>Total Items: ${totalItems}</p>
         <p>Total Price: ${totalPrice}$</p>
         <button class="check-out-btn">Checkout</button>
-         updateCartCount();
+
     `;
 
     const checkoutButton = document.querySelector('.check-out-btn');
