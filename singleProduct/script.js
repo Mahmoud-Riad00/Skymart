@@ -19,6 +19,8 @@ async function fetchSingleProduct() {
 }
 
 function displaySingleProduct(product) {
+
+    
     const singleProductContainer = document.getElementById('single-product');
     const smallContainer = document.querySelector('.small-container');
     
