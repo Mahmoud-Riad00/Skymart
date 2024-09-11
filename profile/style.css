@@ -1,0 +1,40 @@
+main {
+    max-width: 600px;
+    margin: 0 auto;
+    padding: 20px;
+    font-family: "Kanit", sans-serif;
+}
+
+h1 {
+    text-align: center;
+    color: var(--text-color-Day);
+}
+
+#profile-info {
+    background-color: var(--fasion);
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    margin-bottom: 20px;
+}
+
+#profile-info p {
+    margin-bottom: 10px;
+}
+
+#delete-account {
+    display: block;
+    width: 100%;
+    padding: 10px;
+    background-color: #ff4d4d;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+#delete-account:hover {
+    background-color: #ff1a1a;
+}
