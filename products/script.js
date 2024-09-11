@@ -215,6 +215,8 @@ function updateCheckout() {
     addedToCart.forEach(item => {
         totalItems += item.quantity;
         totalPrice += item.price * item.quantity;
+        
+       
     });
 
     document.querySelector('.checkOut').innerHTML = `
