@@ -127,6 +127,7 @@ function updateCartView() {
 
     attachCartEventListeners();
     updateCheckout();
+    updateCartCount();
 }
 
 // ... [keep attachCartEventListeners as is] ...
