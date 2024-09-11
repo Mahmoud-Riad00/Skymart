@@ -1,11 +1,10 @@
 <!DOCTYPE html>
-<!-- Coding By CodingNepal - codingnepalweb.com -->
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-   <title>Login & Signup Form</title>
+    <title>Login & Signup Form</title>
     <link rel="stylesheet" href="style.css" />
   </head>
   <body>
@@ -14,7 +13,7 @@
         <header>Signup</header>
         <form action="#">
           <input type="text" placeholder="Full name" required class="fullName" />
-          <input type="text" placeholder="Email address" required class="Email" />
+          <input type="email" placeholder="Email address" required class="Email" />
           <input type="password" placeholder="Password" required class="password"/>
           <div class="checkbox">
             <input type="checkbox" id="signupCheck" />
@@ -27,15 +26,18 @@
       <div class="form login">
         <header>Login</header>
         <form action="#">
-          <input type="text" placeholder="Email address" required />
-          <input type="password" placeholder="Password" required />
+          <input type="email" placeholder="Email address" required class="loginEmail" />
+          <input type="password" placeholder="Password" required class="loginPassword" />
           <a href="#">Forgot password?</a>
           <input type="submit" value="Login" class="login-btn"/>
         </form>
       </div>
-
-      <script src="./script.js">
-      </script>
     </section>
+
+    <noscript>
+      <p>This application requires JavaScript to function properly. Please enable JavaScript in your browser settings.</p>
+    </noscript>
+
+    <script src="script.js"></script>
   </body>
 </html>

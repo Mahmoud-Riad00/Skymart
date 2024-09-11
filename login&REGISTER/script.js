@@ -1,66 +1,104 @@
-const wrapper = document.querySelector(".wrapper"),
-      signupHeader = document.querySelector(".signup header"),
-      loginHeader = document.querySelector(".login header");
+document.addEventListener('DOMContentLoaded', () => {
+    const wrapper = document.querySelector(".wrapper");
+    const signupHeader = document.querySelector(".signup header");
+    const loginHeader = document.querySelector(".login header");
+    const signupForm = document.querySelector(".signup form");
+    const loginForm = document.querySelector(".login form");
 
-loginHeader.addEventListener("click", () => {
-    wrapper.classList.add("active");
-});
-signupHeader.addEventListener("click", () => {
-    wrapper.classList.remove("active");
-});
+    // Toggle between login and signup forms
+    loginHeader.addEventListener("click", () => {
+        wrapper.classList.add("active");
+    });
+    signupHeader.addEventListener("click", () => {
+        wrapper.classList.remove("active");
+    });
 
+    // Helper functions
+    const isValidEmail = (email) => {
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        return emailRegex.test(email);
+    };
 
-document.querySelector('.signUp-btn').addEventListener('click', (event) => {
-    event.preventDefault(); 
+    const isStrongPassword = (password) => {
+        return password.length >= 8;
+    };
 
-    let fullName = document.querySelector('.fullName').value.trim();
-    let email = document.querySelector('.Email').value.trim().toLowerCase(); // Store email as lowercase
-    let password = document.querySelector('.password').value.trim();
-    let checkbox = document.getElementById('signupCheck');
-    let userData = JSON.parse(localStorage.getItem('userData')) || [];
+    const showError = (message) => {
+        alert(message); // In a real app, use a more user-friendly error display method
+    };
 
+    const saveUserData = (userData) => {
+        let existingUsers = JSON.parse(localStorage.getItem('userData')) || [];
+        existingUsers.push(userData);
+        localStorage.setItem('userData', JSON.stringify(existingUsers));
+    };
 
-    let emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    // Signup form submission
+    signupForm.addEventListener('submit', (event) => {
+        event.preventDefault();
 
-    if (!fullName || !email || !password) {
-        alert('Please complete all details');
-    } else if (!emailPattern.test(email)) {
-        alert('Please enter a valid email address');
-    } else if (userData.some(user => user.userEmail === email)) {
-        alert('Email already exists, try another');
-    } else if (!checkbox.checked) {
-        alert('Please agree to the terms and conditions');
-    } else {
-        userData.push({
+        const fullName = signupForm.querySelector('.fullName').value.trim();
+        const email = signupForm.querySelector('.Email').value.trim().toLowerCase();
+        const password = signupForm.querySelector('.password').value.trim();
+        const checkbox = signupForm.querySelector('#signupCheck');
+
+        if (!fullName || !email || !password) {
+            return showError('Please complete all details');
+        }
+
+        if (!isValidEmail(email)) {
+            return showError('Please enter a valid email address');
+        }
+
+        if (!isStrongPassword(password)) {
+            return showError('Password should be at least 8 characters long');
+        }
+
+        if (!checkbox.checked) {
+            return showError('Please agree to the terms and conditions');
+        }
+
+        const existingUsers = JSON.parse(localStorage.getItem('userData')) || [];
+        if (existingUsers.some(user => user.userEmail === email)) {
+            return showError('Email already exists, try another');
+        }
+
+        const newUser = {
             userName: fullName,
             userEmail: email,
-            userPassword: password
-        });
-        localStorage.setItem('userData', JSON.stringify(userData));
-        console.log('User registered:', userData); 
+            userPassword: password // In a real app, never store passwords in plain text
+        };
+
+        saveUserData(newUser);
+        console.log('User registered:', newUser);
         wrapper.classList.add("active"); 
-    }
-});
+        signupForm.reset();
+    });
+
+    loginForm.addEventListener('submit', (event) => {
+        event.preventDefault();
+
+        const email = loginForm.querySelector('.loginEmail').value.trim().toLowerCase();
+        const password = loginForm.querySelector('.loginPassword').value.trim();
+
+        if (!email || !password) {
+            return showError('Please enter both email and password');
+        }
+
+        const userData = JSON.parse(localStorage.getItem('userData')) || [];
+        const user = userData.find(user => user.userEmail.toLowerCase() === email);
+
+        if (!user) {
+            return showError('Email not registered yet');
+        }
+
+        if (user.userPassword !== password) {
+            return showError('Incorrect password');
+        }
 
 
-document.querySelector('.login-btn').addEventListener('click', (event) => {
-    event.preventDefault(); 
+        console.log('Login successful:', user.userName);
 
-    let email = document.querySelector('.Email').value.trim().toLowerCase();  login
-    let password = document.querySelector('.password').value.trim();
-    let userData = JSON.parse(localStorage.getItem('userData')) || [];
-
-    console.log("Login Attempt with email:", email); 
-    console.log("Stored Users:", userData);
-
-    let user = userData.find(user => user.userEmail.toLowerCase() === email); // Match email in lowercase
-
-    if (!user) {
-        alert('Email not registered yet');
-    } else if (user.userPassword !== password) {
-        alert('Incorrect password');
-    } else {
         window.location.assign(`https://mahmoud-riad00.github.io/Skymart/products/products.html?username=${encodeURIComponent(user.userName)}`);
-        console.log('done');
-    }
+    });
 });
