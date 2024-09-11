@@ -5,6 +5,7 @@
     margin: 0px;
     box-sizing: border-box;
     color: var(--text-color-Day);
+    text-align: center;
 }
 
 :root {
