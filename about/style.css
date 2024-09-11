@@ -1,32 +1,49 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
+
+body {
+    font-family: 'Poppins', sans-serif;
+    background-color: var(--background-dayMode);
+    color: var(--text-color-Day);
+    line-height: 1.6;
+}
+
 main {
-    max-width: 800px;
-    margin: 0 auto;
-    padding: 20px;
-    font-family: "Kanit", sans-serif;
+    max-width: 900px;
+    margin: 50px auto;
+    padding: 40px;
+    background-color: var(--fasion);
+    border-radius: 15px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
 }
 
 h1 {
     color: var(--blue-sky);
     text-align: center;
+    font-size: 2.5em;
     margin-bottom: 30px;
+    text-transform: uppercase;
+    letter-spacing: 2px;
 }
 
 h2 {
     color: var(--text-color-Day);
-    margin-top: 30px;
-    margin-bottom: 15px;
+    margin-top: 40px;
+    margin-bottom: 20px;
+    font-size: 1.8em;
+    border-bottom: 2px solid var(--blue-sky);
+    padding-bottom: 10px;
 }
 
 .about-content {
-    background-color: var(--fasion);
+    background-color: rgba(255, 255, 255, 0.8);
     padding: 30px;
     border-radius: 10px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
 }
 
 p {
-    line-height: 1.6;
-    margin-bottom: 15px;
+    margin-bottom: 20px;
+    font-size: 1.1em;
 }
 
 ul {
@@ -35,25 +52,70 @@ ul {
 }
 
 li {
-    margin-bottom: 10px;
+    margin-bottom: 15px;
     position: relative;
+    padding-left: 25px;
 }
 
 li::before {
-    content: "•";
+    content: "✓";
     color: var(--blue-sky);
     font-weight: bold;
     display: inline-block;
     width: 1em;
-    margin-left: -1em;
+    position: absolute;
+    left: 0;
+}
+
+li strong {
+    color: var(--blue-sky);
 }
 
 @media (max-width: 768px) {
     main {
-        padding: 10px;
+        padding: 20px;
+        margin: 20px;
     }
     
-    .about-content {
-        padding: 20px;
+    h1 {
+        font-size: 2em;
     }
+    
+    h2 {
+        font-size: 1.5em;
+    }
+    
+    p, li {
+        font-size: 1em;
+    }
+}
+
+/* Add some animations */
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+main {
+    animation: fadeIn 1s ease-in-out;
+}
+
+h2, p, ul {
+    opacity: 0;
+    animation: fadeIn 1s ease-in-out forwards;
+}
+
+h2 { animation-delay: 0.3s; }
+p { animation-delay: 0.6s; }
+ul { animation-delay: 0.9s; }
+
+/* Hover effects */
+li:hover {
+    transform: translateX(5px);
+    transition: transform 0.3s ease;
+}
+
+h2:hover {
+    color: var(--blue-sky);
+    transition: color 0.3s ease;
 }
