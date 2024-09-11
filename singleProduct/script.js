@@ -1,5 +1,4 @@
 async function fetchSingleProduct() {
-    checkLoggedInUser(); // Add this line to check for logged-in user
     const urlParams = new URLSearchParams(window.location.search);
     const productId = urlParams.get('id');
 
@@ -10,60 +9,44 @@ async function fetchSingleProduct() {
 
     try {
         const response = await fetch(`https://api.escuelajs.co/api/v1/products/${productId}`);
+        if (!response.ok) throw new Error('Network response was not ok');
         const product = await response.json();
 
-        displaySingleProduct(product);
-    } catch (error) {
-        console.error('Error fetching product data:', error);
-    }
-}
-
-function displaySingleProduct(product) {
-
-    
-    const singleProductContainer = document.getElementById('single-product');
-    const smallContainer = document.querySelector('.small-container');
-    
-    // Clear previous content
-    smallContainer.innerHTML = '';
-    
-    // Display small images in a row
-    for(let x = 0; x < product.images.length; x++){
-        smallContainer.innerHTML += `
-        <img src="${product.images[x]}" alt="${product.title}" class="small-product-image" onclick="updateMainImage(this.src)">
-        `;
-    }
-    
-    // Set initial main image and product details
-    singleProductContainer.innerHTML = `
-        <div class="single-product-card">
-            <div class="product-images">
-                <img src="${product.images[0]}" alt="${product.title}" class="main-product-image" id="mainImage">
-                <div class="small-container-wrapper">
-                    ${smallContainer.outerHTML}
+        const singleProductElement = document.getElementById('single-product');
+        singleProductElement.innerHTML = `
+            <div class="single-product-card">
+                <div class="product-images">
+                    <img src="${product.images[0]}" alt="${product.title}" class="main-product-image">
+                    <div class="small-container-wrapper">
+                        <div class="small-container">
+                            ${product.images.map((img, index) => `
+                                <img src="${img}" alt="${product.title} ${index + 1}" class="small-product-image" data-index="${index}">
+                            `).join('')}
+                        </div>
+                    </div>
+                </div>
+                <div class="single-product-details">
+                    <h1>${product.title}</h1>
+                    <p class="single-product-category">Category: ${product.category.name}</p>
+                    <p class="single-product-description">${product.description}</p>
+                    <p class="single-product-price">$${product.price}</p>
+                    <button class="buy-now-btn">Buy Now</button>
                 </div>
             </div>
-            <div class="single-product-details">
-                <h1>${product.title}</h1>
-                <p class="single-product-category">${product.category.name}</p>
-                <p class="single-product-description">${product.description}</p>
-                <p class="single-product-price">$${product.price}</p>
-                <button class="buy-now-btn">Buy Now</button>
-            </div>
-        </div>
-    `;
-}
+        `;
 
-function updateMainImage(src) {
-    document.getElementById('mainImage').src = src;
-}
+        // Add event listeners to small images
+        const smallImages = document.querySelectorAll('.small-product-image');
+        const mainImage = document.querySelector('.main-product-image');
 
-function checkLoggedInUser() {
-    const loggedInUser = JSON.parse(sessionStorage.getItem('loggedInUser'));
-    if (!loggedInUser) {
-        window.location.href = '../login&REGISTER/login.html';
-    } else {
-        document.querySelector('.profileLink').textContent = loggedInUser.userName;
+        smallImages.forEach(img => {
+            img.addEventListener('click', () => {
+                mainImage.src = img.src;
+            });
+        });
+
+    } catch (error) {
+        console.error('Error fetching product:', error);
     }
 }
 
