@@ -158,6 +158,8 @@ function attachCartEventListeners() {
             numberOfProduct.textContent = count + 1;
 
             updateCartItemQuantity(productElement, count + 1);
+            updateCartCount();
+            updateCheckout();
         });
     });
 
@@ -198,6 +200,8 @@ function updateCheckout() {
     addedToCart.forEach(item => {
         totalItems += item.quantity;
         totalPrice += item.price * item.quantity;
+        
+       
     });
 
     document.querySelector('.checkOut').innerHTML = `
@@ -205,7 +209,7 @@ function updateCheckout() {
         <p>Total Price: ${totalPrice}$</p>
         <button class="check-out-btn">Checkout</button>
     `;
-
+    updateCartCount();
     const checkoutButton = document.querySelector('.check-out-btn');
     if (checkoutButton) {
         checkoutButton.addEventListener('click', () => {
