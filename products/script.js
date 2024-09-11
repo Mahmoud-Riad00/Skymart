@@ -28,16 +28,14 @@ let scrollTimeout;
 window.addEventListener('scroll', () => {
     if (scrollTimeout) clearTimeout(scrollTimeout);
     scrollTimeout = setTimeout(() => {
+        const nav = document.querySelector('.navSettings');
+        const upContainer = document.querySelector('.up-container');
         if (window.scrollY > 100) {
-            nav.style.width = '100vw';
-            nav.style.borderRadius = '0rem';
-            nav.style.justifyContent = 'space-evenly';
-            cartContainer.style.display = 'block';
+            nav.classList.add('scrolled');
+            upContainer.style.display = 'flex';
         } else {
-            nav.style.width = '';
-            nav.style.borderRadius = '2rem';
-            nav.style.justifyContent = 'space-between';
-            cartContainer.style.display = 'none';
+            nav.classList.remove('scrolled');
+            upContainer.style.display = 'none';
         }
     }, 0);
 });

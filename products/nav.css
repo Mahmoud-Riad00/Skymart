@@ -150,6 +150,33 @@ nav {
     
 }
 
+@media (min-width: 1026px) {
+    .navSettings.scrolled {
+        width: 100vw;
+        border-radius: 0;
+        justify-content: space-evenly;
+    }
+}
+
+.up-container {
+    position: fixed;
+    padding: 15px 20px;
+    background-color: var(--fasion);
+    bottom: 50px;
+    right: 50px;
+    z-index: 2000;
+    display: none;
+    border-radius: 5px;
+    text-decoration: none;
+    transition: .3s;
+    box-shadow: 5px 5px rgba(0, 0, 0, 0.2);
+}
+
+.up-container:hover {
+    box-shadow: 5px 5px rgba(0, 0, 0, 0.5);
+    transform: rotate(0deg) scale(1.15);
+}
+
 .slideShow {
     display: flex;
     justify-content: space-evenly;

@@ -1,0 +1,80 @@
+@import url('https://fonts.googleapis.com/css2?family=Kanit:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+
+:root {
+    --background-dayMode: #dadcde;
+    --text-color-Day: #16191f;
+    --blue-sky: #0466c8;
+    --fasion: white;
+    --spacing-small: 5px;
+    --spacing-medium: 10px;
+    --spacing-large: 20px;
+}
+
+body {
+    font-family: 'Kanit', sans-serif;
+    background-color: var(--background-dayMode);
+    color: var(--text-color-Day);
+    margin: 0;
+    padding: 0;
+}
+
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+.single-product {
+    display: flex;
+    background-color: var(--fasion);
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.product-image {
+    flex: 1;
+    padding: 20px;
+}
+
+.product-image img {
+    width: 100%;
+    height: auto;
+    border-radius: 5px;
+}
+
+.product-details {
+    flex: 1;
+    padding: 20px;
+}
+
+h1 {
+    margin-top: 0;
+}
+
+.price {
+    font-size: 1.2em;
+    font-weight: bold;
+    color: var(--blue-sky);
+}
+
+button {
+    background-color: var(--blue-sky);
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    font-size: 1em;
+    cursor: pointer;
+    border-radius: 5px;
+    margin-top: 20px;
+}
+
+button:hover {
+    opacity: 0.9;
+}
+
+@media (max-width: 768px) {
+    .single-product {
+        flex-direction: column;
+    }
+}
