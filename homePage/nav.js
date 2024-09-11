@@ -138,9 +138,36 @@ function attachCartEventListeners() {
     });
 }
 
+function updateNavLinks() {
+    const links = document.querySelectorAll('.links a');
+    links.forEach(link => {
+        switch (link.textContent) {
+            case 'Home':
+                link.href = 'https://mahmoud-riad00.github.io/Skymart/homePage/index.html';
+                break;
+            case 'Products':
+                link.href = 'https://mahmoud-riad00.github.io/Skymart/products/products.html';
+                break;
+            case 'About':
+                link.href = 'https://mahmoud-riad00.github.io/Skymart/about/about.html';
+                break;
+            case 'Contact Us':
+                link.href = 'https://mahmoud-riad00.github.io/Skymart/contact/contact.html';
+                break;
+            case 'Login':
+                link.href = 'https://mahmoud-riad00.github.io/Skymart/login&REGISTER/Login.html';
+                break;
+            case 'Profile':
+                link.href = 'https://mahmoud-riad00.github.io/Skymart/profile/profile.html';
+                break;
+        }
+    });
+}
+
 document.addEventListener('DOMContentLoaded', function() {
     checkLoggedInUser();
     updateCartCount();
+    updateNavLinks();
 
     const cartElement = document.querySelector('.cart');
     if (cartElement) {
@@ -195,4 +222,4 @@ window.addEventListener('scroll', () => {
             nav.style.borderRadius = '2rem';
         }
     }, 50);
-});
+});A
