@@ -196,6 +196,7 @@ menu.addEventListener('click', () => {
 window.onload = function() {
     addedToCart = JSON.parse(localStorage.getItem('cartItem')) || [];
     updateCartCount();
+    updateCartView(); // Add this line
     updateCheckout();
     getData();
 };
@@ -205,11 +206,33 @@ document.querySelector('.cart').addEventListener('click', function() {
 
     if (content.style.display === 'none' || content.style.display === '') {
         content.style.display = 'block';
-
-        
+        updateCartView(); // Add this line to update the cart view when opened
     } else {
         content.style.display = 'none';
-        
-       
     }
 });
+
+// Add this function to update the cart view
+function updateCartView() {
+    let cartdata = JSON.parse(localStorage.getItem("cartItem")) || [];
+    let productView = document.querySelector('.product-view');
+    productView.innerHTML = '';
+
+    cartdata.forEach(item => {
+        productView.innerHTML += `
+        <div class="tacken-products" data-id="${item.id}">
+            <div class="product-ch">
+                <img src="${item.Images[0]}">
+                <div class="ch-btn">
+                    <p>${item.price}$</p>
+                    <button class="increase">+</button>
+                    <button class="decrease">-</button>
+                    <p class="number-of-product">${item.quantity}</p>
+                </div>
+            </div>
+        </div>`;
+    });
+
+    attachCartEventListeners();
+    updateCheckout();
+}
