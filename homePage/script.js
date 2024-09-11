@@ -146,13 +146,18 @@ window.onload = function() {
 };
 
 // Add event listener for "Buy Now" button
-document.querySelector('.cat-product a').addEventListener('click', (event) => {
-    event.preventDefault();
-    const loggedInUser = JSON.parse(sessionStorage.getItem('loggedInUser'));
-    if (loggedInUser) {
-        window.location.href = 'https://mahmoud-riad00.github.io/Skymart/products/products.html';
-    } else {
-        redirectToLogin();
+document.addEventListener('DOMContentLoaded', function() {
+    const buyNowButton = document.querySelector('.cat-product a');
+    if (buyNowButton) {
+        buyNowButton.addEventListener('click', (event) => {
+            event.preventDefault();
+            const loggedInUser = JSON.parse(sessionStorage.getItem('loggedInUser'));
+            if (loggedInUser) {
+                window.location.href = 'https://mahmoud-riad00.github.io/Skymart/products/products.html';
+            } else {
+                redirectToLogin();
+            }
+        });
     }
 });
 
