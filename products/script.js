@@ -229,8 +229,9 @@ function updateCheckout() {
     if (checkoutButton) {
         checkoutButton.addEventListener('click', () => {
             if (addedToCart.length > 0) {
+                const loggedInUser = JSON.parse(sessionStorage.getItem('loggedInUser'));
                 addedToCart = [];
-                localStorage.removeItem('cartItem');
+                localStorage.removeItem(`cartItem_${loggedInUser.userEmail}`);
                 updateCartView();
                 updateCartCount();
                 showCheckoutAlert();
