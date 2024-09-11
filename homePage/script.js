@@ -32,11 +32,10 @@ const descriptions = [
 // Add these functions at the beginning of the file
 function checkLoggedInUser() {
     const loggedInUser = JSON.parse(sessionStorage.getItem('loggedInUser'));
-    if (loggedInUser) {
-        document.querySelector('.loginLink').style.display = 'none';
-        document.querySelector('.profileLink').textContent = loggedInUser.userName;
+    if (!loggedInUser) {
+        window.location.href = '../login&REGISTER/login.html';
     } else {
-        document.querySelector('.profileLink').style.display = 'none';
+        document.querySelector('.profileLink').textContent = loggedInUser.userName;
     }
 }
 
