@@ -34,10 +34,8 @@ function checkLoggedInUser() {
     const loggedInUser = JSON.parse(sessionStorage.getItem('loggedInUser'));
     if (loggedInUser) {
         document.querySelector('.loginLink').style.display = 'none';
-        document.querySelector('.profileLink').style.display = 'block';
         document.querySelector('.profileLink').textContent = loggedInUser.userName;
     } else {
-        document.querySelector('.loginLink').style.display = 'block';
         document.querySelector('.profileLink').style.display = 'none';
     }
 }
