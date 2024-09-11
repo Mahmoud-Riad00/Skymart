@@ -102,7 +102,8 @@ function addToCart(event, data) {
     }
 
     updateCartCount();
-    localStorage.setItem('cartItem', JSON.stringify(addedToCart));
+    const loggedInUser = JSON.parse(sessionStorage.getItem('loggedInUser'));
+    localStorage.setItem(`cartItem_${loggedInUser.userEmail}`, JSON.stringify(addedToCart));
     updateCartView();
     toggleProductAddedMessage(event);
 }
@@ -247,6 +248,7 @@ document.querySelector('.cart').addEventListener('click', function() {
 
 // Initialize the application
 window.onload = function() {
+    checkLoggedInUser();
     addedToCart = JSON.parse(localStorage.getItem('cartItem')) || [];
     updateCartCount();
     updateCartView();

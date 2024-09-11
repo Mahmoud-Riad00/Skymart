@@ -96,9 +96,14 @@ document.addEventListener('DOMContentLoaded', () => {
             return showError('Incorrect password');
         }
 
-
         console.log('Login successful:', user.userName);
 
-        window.location.assign(`https://mahmoud-riad00.github.io/Skymart/products/products.html?username=${encodeURIComponent(user.userName)}`);
+        // Set session storage
+        sessionStorage.setItem('loggedInUser', JSON.stringify({
+            userName: user.userName,
+            userEmail: user.userEmail
+        }));
+
+        window.location.href = 'https://mahmoud-riad00.github.io/Skymart/homePage/index.html';
     });
 });

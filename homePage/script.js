@@ -29,6 +29,23 @@ const descriptions = [
     }
 ];
 
+// Add these functions at the beginning of the file
+function checkLoggedInUser() {
+    const loggedInUser = JSON.parse(sessionStorage.getItem('loggedInUser'));
+    if (loggedInUser) {
+        document.querySelector('.loginLink').style.display = 'none';
+        document.querySelector('.profileLink').style.display = 'block';
+        document.querySelector('.profileLink').textContent = loggedInUser.userName;
+    } else {
+        document.querySelector('.loginLink').style.display = 'block';
+        document.querySelector('.profileLink').style.display = 'none';
+    }
+}
+
+function redirectToLogin() {
+    window.location.href = '../login&REGISTER/login.html';
+}
+
 // Function to update cart count
 function updateCartCount() {
     let cartCount = addedToCart.length;
@@ -92,6 +109,52 @@ async function getData() {
     }
 }
 
+// Modify the getData function
+async function getData() {
+    // ... existing code ...
+
+    const loggedInUser = JSON.parse(sessionStorage.getItem('loggedInUser'));
+    if (loggedInUser) {
+        addedToCart = JSON.parse(localStorage.getItem(`cartItem_${loggedInUser.userEmail}`)) || [];
+    } else {
+        addedToCart = [];
+    }
+
+    updateCartCount();
+    updateCartView();
+    updateCheckout();
+}
+
+// Modify the addToCart function
+function addToCart(event, data) {
+    const loggedInUser = JSON.parse(sessionStorage.getItem('loggedInUser'));
+    if (!loggedInUser) {
+        redirectToLogin();
+        return;
+    }
+
+    // ... existing code ...
+
+    localStorage.setItem(`cartItem_${loggedInUser.userEmail}`, JSON.stringify(addedToCart));
+    // ... rest of the existing code ...
+}
+
+// Modify the window.onload function
+window.onload = function() {
+    checkLoggedInUser();
+    getData();
+};
+
+// Add event listener for "Buy Now" button
+document.querySelector('.cat-product a').addEventListener('click', (event) => {
+    event.preventDefault();
+    const loggedInUser = JSON.parse(sessionStorage.getItem('loggedInUser'));
+    if (loggedInUser) {
+        window.location.href = 'https://mahmoud-riad00.github.io/Skymart/products/products.html';
+    } else {
+        redirectToLogin();
+    }
+});
 
 function updateMainimg() {
     MainPhoto.innerHTML = `<img class="big-img" src="${data[currentindex].image}">`;
@@ -194,10 +257,7 @@ menu.addEventListener('click', () => {
     }
 });
 window.onload = function() {
-    addedToCart = JSON.parse(localStorage.getItem('cartItem')) || [];
-    updateCartCount();
-    updateCartView(); // Add this line
-    updateCheckout();
+    checkLoggedInUser();
     getData();
 };
 document.querySelector('.cart').addEventListener('click', function() {
