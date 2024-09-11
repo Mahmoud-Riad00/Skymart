@@ -98,7 +98,7 @@ function updateMainimg() {
     categoryDescription.innerHTML = `
         <h1>${data[currentindex].name}</h1>
         <p>${descriptions[currentindex].description}</p>
-        <div class="cat-product"><a href="https://api.escuelajs.co/api/v1/categories/${data[currentindex].id}/products">Buy Now</a></div>`;
+        <div class="cat-product"><a href="https://mahmoud-riad00.github.io/Skymart/products/products.html">Buy Now</a></div>`;
 }
 
 function autoSlid() {
