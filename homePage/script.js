@@ -139,14 +139,28 @@ function addToCart(event, data) {
     // ... rest of the existing code ...
 }
 
-// Modify the window.onload function
-window.onload = function() {
+// Replace the window.onload function with this:
+document.addEventListener('DOMContentLoaded', function() {
     checkLoggedInUser();
     getData();
-};
 
-// Add event listener for "Buy Now" button
-document.addEventListener('DOMContentLoaded', function() {
+    // Move the cart click event listener here
+    const cartElement = document.querySelector('.cart');
+    if (cartElement) {
+        cartElement.addEventListener('click', function() {
+            let content = document.querySelector('.cart-container');
+            let container = document.querySelector('.container');
+
+            if (content.style.display === 'none' || content.style.display === '') {
+                content.style.display = 'block';
+                updateCartView(); // Add this line to update the cart view when opened
+            } else {
+                content.style.display = 'none';
+            }
+        });
+    }
+
+    // Add event listener for "Buy Now" button
     const buyNowButton = document.querySelector('.cat-product a');
     if (buyNowButton) {
         buyNowButton.addEventListener('click', (event) => {
@@ -159,7 +173,39 @@ document.addEventListener('DOMContentLoaded', function() {
             }
         });
     }
+
+    // Add menu click event listener here
+    const menuElement = document.querySelector('.menu');
+    if (menuElement) {
+        menuElement.addEventListener('click', () => {
+            let logo = document.querySelector('.logo');
+            let cart = document.querySelector('.cart');
+            let links = document.querySelector('.links') || document.querySelector('.nav-menu');
+            
+            links.classList.toggle('active');
+            
+            if (links.classList.contains('active')) {
+                if (cart) cart.style.display = 'none';
+                if (logo) {
+                    logo.style.display = 'none';
+                    logo.classList.add('logo');
+                }
+            } else {
+                if (cart) cart.style.display = 'block';
+                if (logo) {
+                    logo.style.display = 'flex';
+                }
+            }
+        });
+    }
 });
+
+// Remove these event listeners from their current positions
+// document.querySelector('.cart').addEventListener('click', function() { ... });
+// let menu = document.querySelector('.menu');
+// menu.addEventListener('click', () => { ... });
+
+// ... (keep all the other functions as they are)
 
 function updateMainimg() {
     MainPhoto.innerHTML = `<img class="big-img" src="${data[currentindex].image}">`;
@@ -235,69 +281,4 @@ function attachCartEventListeners() {
             updateCheckout();
         });
     });
-}
-// if(window.width <= 1026px)
-let menu = document.querySelector('.menu');
-menu.addEventListener('click', () => {
-
-    let logo = document.querySelector('.logo');
-    let cart = document.querySelector('.cart');
-    let links = document.querySelector('.links'||'.nav-menu')
-    
-    // Toggle the 'active' class on the links element
-    links.classList.toggle('active');
-    
-    if (links.classList.contains('active')) {
-        cart.style.display = 'none';
-        logo.style.display = 'none';
-        logo.classList.add('logo')
-       
-
-    } else {
-        cart.style.display = 'block';
-        logo.style.display = 'block';
-        logo.style.display='flex'
-
-       
-    }
-});
-window.onload = function() {
-    checkLoggedInUser();
-    getData();
-};
-document.querySelector('.cart').addEventListener('click', function() {
-    let content = document.querySelector('.cart-container');
-    let container = document.querySelector('.container');
-
-    if (content.style.display === 'none' || content.style.display === '') {
-        content.style.display = 'block';
-        updateCartView(); // Add this line to update the cart view when opened
-    } else {
-        content.style.display = 'none';
-    }
-});
-
-// Add this function to update the cart view
-function updateCartView() {
-    let cartdata = JSON.parse(localStorage.getItem("cartItem")) || [];
-    let productView = document.querySelector('.product-view');
-    productView.innerHTML = '';
-
-    cartdata.forEach(item => {
-        productView.innerHTML += `
-        <div class="tacken-products" data-id="${item.id}">
-            <div class="product-ch">
-                <img src="${item.Images[0]}">
-                <div class="ch-btn">
-                    <p>${item.price}$</p>
-                    <button class="increase">+</button>
-                    <button class="decrease">-</button>
-                    <p class="number-of-product">${item.quantity}</p>
-                </div>
-            </div>
-        </div>`;
-    });
-
-    attachCartEventListeners();
-    updateCheckout();
 }
