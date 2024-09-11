@@ -83,6 +83,35 @@ function updateCheckout() {
     });
 }
 
+// Add this function to update the cart view
+function updateCartView() {
+    const loggedInUser = JSON.parse(sessionStorage.getItem('loggedInUser'));
+    let cartdata = loggedInUser ? JSON.parse(localStorage.getItem(`cartItem_${loggedInUser.userEmail}`)) || [] : [];
+    let productView = document.querySelector('.product-view');
+    
+    if (!productView) return; // Exit if the product-view element doesn't exist
+
+    productView.innerHTML = '';
+
+    cartdata.forEach(item => {
+        productView.innerHTML += `
+        <div class="tacken-products" data-id="${item.id}">
+            <div class="product-ch">
+                <img src="${item.Images[0]}">
+                <div class="ch-btn">
+                    <p>${item.price}$</p>
+                    <button class="increase">+</button>
+                    <button class="decrease">-</button>
+                    <p class="number-of-product">${item.quantity}</p>
+                </div>
+            </div>
+        </div>`;
+    });
+
+    attachCartEventListeners();
+    updateCheckout();
+}
+
 async function getData() {
     try {
         let dataRes = await fetch("https://api.escuelajs.co/api/v1/categories");
@@ -101,7 +130,16 @@ async function getData() {
 
         updateMainimg();
         autoSlid();
+
+        const loggedInUser = JSON.parse(sessionStorage.getItem('loggedInUser'));
+        if (loggedInUser) {
+            addedToCart = JSON.parse(localStorage.getItem(`cartItem_${loggedInUser.userEmail}`)) || [];
+        } else {
+            addedToCart = [];
+        }
+
         updateCartCount();
+        updateCartView();
         updateCheckout();
     } catch (error) {
         console.error("Error fetching data:", error);
@@ -109,34 +147,17 @@ async function getData() {
     }
 }
 
-// Modify the getData function
-async function getData() {
-    // ... existing code ...
-
-    const loggedInUser = JSON.parse(sessionStorage.getItem('loggedInUser'));
-    if (loggedInUser) {
-        addedToCart = JSON.parse(localStorage.getItem(`cartItem_${loggedInUser.userEmail}`)) || [];
-    } else {
-        addedToCart = [];
+// Modify the updateCartItemQuantity function
+function updateCartItemQuantity(productElement, quantity) {
+    let productId = productElement.closest('.tacken-products').dataset.id;
+    let cartItem = addedToCart.find(item => item.id === productId);
+    if (cartItem) {
+        cartItem.quantity = quantity;
+        const loggedInUser = JSON.parse(sessionStorage.getItem('loggedInUser'));
+        if (loggedInUser) {
+            localStorage.setItem(`cartItem_${loggedInUser.userEmail}`, JSON.stringify(addedToCart));
+        }
     }
-
-    updateCartCount();
-    updateCartView();
-    updateCheckout();
-}
-
-// Modify the addToCart function
-function addToCart(event, data) {
-    const loggedInUser = JSON.parse(sessionStorage.getItem('loggedInUser'));
-    if (!loggedInUser) {
-        redirectToLogin();
-        return;
-    }
-
-    // ... existing code ...
-
-    localStorage.setItem(`cartItem_${loggedInUser.userEmail}`, JSON.stringify(addedToCart));
-    // ... rest of the existing code ...
 }
 
 // Replace the window.onload function with this:
@@ -149,13 +170,13 @@ document.addEventListener('DOMContentLoaded', function() {
     if (cartElement) {
         cartElement.addEventListener('click', function() {
             let content = document.querySelector('.cart-container');
-            let container = document.querySelector('.container');
-
-            if (content.style.display === 'none' || content.style.display === '') {
-                content.style.display = 'block';
-                updateCartView(); // Add this line to update the cart view when opened
-            } else {
-                content.style.display = 'none';
+            if (content) {
+                if (content.style.display === 'none' || content.style.display === '') {
+                    content.style.display = 'block';
+                    updateCartView(); // Update the cart view when opened
+                } else {
+                    content.style.display = 'none';
+                }
             }
         });
     }
