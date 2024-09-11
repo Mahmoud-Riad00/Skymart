@@ -1,4 +1,5 @@
 async function fetchSingleProduct() {
+    checkLoggedInUser(); // Add this line to check for logged-in user
     const urlParams = new URLSearchParams(window.location.search);
     const productId = urlParams.get('id');
 
@@ -53,6 +54,15 @@ function displaySingleProduct(product) {
 
 function updateMainImage(src) {
     document.getElementById('mainImage').src = src;
+}
+
+function checkLoggedInUser() {
+    const loggedInUser = JSON.parse(sessionStorage.getItem('loggedInUser'));
+    if (!loggedInUser) {
+        window.location.href = '../login&REGISTER/login.html';
+    } else {
+        document.querySelector('.profileLink').textContent = loggedInUser.userName;
+    }
 }
 
 window.onload = fetchSingleProduct;
