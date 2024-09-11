@@ -82,7 +82,7 @@ function attachCardEventListeners(data) {
     document.querySelectorAll('.card').forEach(card => {
         card.addEventListener('click', event => {
             let productId = event.currentTarget.dataset.id;
-            window.location.href = `https://mahmoud-riad00.github.io/Skymart/singleProduct/single-product.html?id=${productId}`;
+            window.location.href = `https://mahmoud-riad00.github.io/Skymart/singleProduct/singleProduct.html?id=${productId}`;
         });
     });
 
